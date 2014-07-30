@@ -9,7 +9,7 @@
 	};
 
     var timer;
-
+//
 	$('#text').on('keyup', function() {
     	clearTimeout(timer);
 
