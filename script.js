@@ -9,13 +9,13 @@
 	};
 
     var timer;
-//
+
 	$('#text').on('keyup', function() {
     	clearTimeout(timer);
 
 		timer = setTimeout(function() {
 			searchTwitter(searchField.value);
-		}, 300);
+		}, 500);
 	});
 
 	function searchTwitter(searchTerm) {
@@ -28,16 +28,20 @@
 				tagmode: "any",
 				format: "json"
 			},
-			success: function(data) {
-				//console.log(data);
-				//console.log('ok');
-				for (var i in data.items) {
-					console.log(data.items[0].author);
-					console.log(data.items[0].title);
-					//console.log(data.items[0].media.m);
-				}
 
-				$("#mydiv img").attr("src", data.items[0].media.m);
+			success: function(data) {
+				$('#mydiv').html(''); //clear all;
+				for (var i in data.items) {
+					console.log("Author is:" , data.items[i].author);
+					console.log("Titile is:" , data.items[i].title);
+					console.log("Description is:", data.items[i].description);
+					console.log("Link is:", data.items[i].media.m);
+					var image =  $('<img>').attr("src", data.items[i].media.m);
+					//$("#mydiv img").attr("src", data.items[i].media.m);
+					$("#mydiv").append(image);
+				}
+                  
+				
 			},
 			error: function(data) {
 				alert(JSON.stringify(data));
