@@ -31,10 +31,7 @@ app.get('/test', function(req, res, next){
   FlickerModel.find({ },  function(err, api){
             if (err) return console.error(err);
             //console.log(apis);
-            res.render('test', {
-            name: api[0].url
-
-    });
+            res.render('test', {name: api});
           });
               
     
