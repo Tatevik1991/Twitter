@@ -3,7 +3,7 @@ var fs = require('fs');
 var path = require('path');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-
+var ejs = require('ejs');
 
 mongoose.connect('mongodb://localhost/mydb');
 
@@ -14,18 +14,32 @@ var schema = mongoose.Schema({
 	url: String
 	});
 
-
-
 var app = express();
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
 
 app.get('/', function(req, res, next){
 		res.redirect('/request.html');
-
+     
 });
+var FlickerModel = mongoose.model('api', schema);
 
+app.get('/test', function(req, res, next){
+  FlickerModel.find({ },  function(err, api){
+            if (err) return console.error(err);
+            //console.log(apis);
+            res.render('test', {
+            name: api[0].url
+
+    });
+          });
+              
+    
+     
+});
 
 app.post('/request', function(req, res, next) {
      
@@ -37,7 +51,6 @@ app.post('/request', function(req, res, next) {
     req.on('end', function() {
         if (body !== '') {
          var store = JSON.parse(body);
-         var FlickerModel = mongoose.model('api', schema);
          var flicker = new FlickerModel(store);
 
           //console.log(flicker.description);
@@ -46,11 +59,8 @@ app.post('/request', function(req, res, next) {
               console.log("Success!!!");
             }
           });
-          FlickerModel.find(function(err, api){
-            if (err) return console.error(err);
-            //console.log(api);
-          });
-          FlickerModel.find(title);
+          
+              
         }  else {
             res.statusCode = 403;
             res.end("Forbidden");
