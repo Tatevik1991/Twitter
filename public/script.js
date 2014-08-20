@@ -32,14 +32,12 @@
 			},
 
 			success: function(data) {
-				//console.log(data);
 				var obj = {
-				    author: data.items[0].author,
+					author: data.items[0].author,
 				 	title : data.items[0].title,
 				    description: data.items[0].description,
 				    url: data.items[0].media.m
-				};
-				  //console.log(obj);
+				};				 
 			 $.ajax({
 					url: '/request',
 					data: JSON.stringify(obj),
@@ -49,34 +47,17 @@
 					},
 					error: function (xhr, status, error) {
 						console.log('Error: ' + error.message);
-					}
+					},
 				});
-
-				
-			 // $.ajax({
-				// 	url: '/request',
-				// 	data: jsonobj,
-				// 	type: 'POST',
-				//     success: function (data) {
-				// 		console.log('Success: ')
-				// 	},
-				// 	error: function (xhr, status, error) {
-				// 		console.log('Error: ' + error.message);
-				// 	},
-				// });
-				// for (var i in data.items) {
-				// 	console.log("Author is:" , data.items[i].author);
-				// 	console.log("Titile is:" , data.items[i].title);
-				// 	console.log("Description is:", data.items[i].description);
-				// 	console.log("Link is:", data.items[i].media.m);
-				// 	var image =  $('<img>').attr("src", data.items[i].media.m);
-				// 	//$("#mydiv img").attr("src", data.items[i].media.m);
-				// 	$("#mydiv").append(image);
-				// }
+					for (var i in data.items) {
+					// console.log("Author is:" , data.items[i].author);
+					// console.log("Titile is:" , data.items[i].title);
+					// console.log("Description is:", data.items[i].description);
+					// console.log("Link is:", data.items[i].media.m);
+					var image =  $('<img>').attr("src", data.items[i].media.m);
+					$("#mydiv").append(image);
+				};
              },
-
-             
-
 
 			error: function(data) {
 				alert("Error from script js");

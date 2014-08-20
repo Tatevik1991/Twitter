@@ -28,7 +28,7 @@ app.get('/', function(req, res, next){
 var FlickerModel = mongoose.model('api', schema);
 
 app.get('/test', function(req, res, next){
-  FlickerModel.find({ },  function(err, api){
+  FlickerModel.find({},  function(err, api){
             if (err) return console.error(err);
             //console.log(apis);
             res.render('test', {name: api});
